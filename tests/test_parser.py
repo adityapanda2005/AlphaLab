@@ -1,7 +1,8 @@
 """Tests for the tokenizer, parser and AST."""
 
 import pytest
-from alphalab.expr import parse, ParseError, TokenizeError, tokenize
+
+from alphalab.expr import ParseError, TokenizeError, parse, tokenize
 from alphalab.expr.ast_nodes import BinOp, Call, Num, UnaryOp, Var
 
 

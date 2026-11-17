@@ -134,7 +134,7 @@ class SubexpressionCache:
         # Summing every entry's footprint on each insert turns the cache into
         # an accidental O(n^2) loop, which showed up immediately as a
         # pathological slowdown once the library grew past a hundred formulas.
-        self._sizes: Dict[str, int] = {}
+        self._sizes: dict[str, int] = {}
         self._bytes_total = 0
         self._peak_bytes = 0
 

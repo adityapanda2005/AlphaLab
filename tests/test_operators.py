@@ -4,8 +4,8 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from alphalab.expr import Evaluator, SubexpressionCache, parse, validate
-from alphalab.expr.operators import all_specs, count, get
+from alphalab.expr import Evaluator
+from alphalab.expr.operators import count, get
 from alphalab.expr.operators.registry import ArityError, OperatorError
 
 
@@ -154,8 +154,13 @@ class TestGroup:
     def test_static_vs_dynamic_agree(self, toy_data):
         """The static fast path must produce identical results to the general path."""
         from alphalab.expr.operators.group import (
-            _aligned, _nanmean, _rank_static, _rank_dynamic,
-            _reduce_static, _reduce_dynamic, _static_column_codes,
+            _aligned,
+            _nanmean,
+            _rank_dynamic,
+            _rank_static,
+            _reduce_dynamic,
+            _reduce_static,
+            _static_column_codes,
         )
         frame, labels = _aligned(toy_data["close"], toy_data["sector"])
         codes = _static_column_codes(labels)

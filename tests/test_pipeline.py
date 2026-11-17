@@ -1,7 +1,9 @@
 """Integration test: the full pipeline on a small panel."""
 
 import warnings
+
 import pytest
+
 from alphalab.data import MarketConfig
 from alphalab.pipeline import PipelineConfig, run_pipeline
 from alphalab.portfolio import PortfolioConfig

@@ -31,12 +31,12 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
-from typing import Iterable, List, Optional, Sequence
+from typing import Optional, Sequence
 
 import numpy as np
 import pandas as pd
 
-from .panel import MarketPanel, PanelError
+from .panel import MarketPanel
 from .synthetic import MarketConfig, generate_market
 
 logger = logging.getLogger(__name__)

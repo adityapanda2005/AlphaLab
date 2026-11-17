@@ -276,8 +276,8 @@ def _sector_neutral_family() -> Dict[str, str]:
     alphas: Dict[str, str] = {}
 
     neutral_targets = {
-        "rev_simple_1": f"-ts_returns(close,1)",
-        "rev_simple_5": f"-ts_returns(close,5)",
+        "rev_simple_1": "-ts_returns(close,1)",
+        "rev_simple_5": "-ts_returns(close,5)",
         "rev_volscaled_5": f"-ts_returns(close,5)/{VOLATILITY_20}",
         "rev_volume_1": f"-ts_returns(close,1)*{VOLUME_SURPRISE}",
         "mom_12_1": "ts_delay(close,21)/ts_delay(close,252)-1",
@@ -311,8 +311,8 @@ def _smoothed_family() -> Dict[str, str]:
     alphas: Dict[str, str] = {}
 
     base_signals = {
-        "rev1": f"-rank(ts_returns(close,1))",
-        "rev5": f"-rank(ts_returns(close,5))",
+        "rev1": "-rank(ts_returns(close,1))",
+        "rev5": "-rank(ts_returns(close,5))",
         "revvol1": f"-rank(ts_returns(close,1)*{VOLUME_SURPRISE})",
         "volsurp": f"rank({VOLUME_SURPRISE})",
     }
@@ -367,7 +367,7 @@ def _composite_family() -> Dict[str, str]:
         f"{VOLUME_SURPRISE} > 0 ? -rank(ts_returns(close,1)) : 0*close"
     )
     alphas["cond_mom_if_trending"] = (
-        f"close > ts_mean(close,200) ? rank(ts_returns(close,60)) : 0*close"
+        "close > ts_mean(close,200) ? rank(ts_returns(close,60)) : 0*close"
     )
     alphas["cond_rev_if_wide_range"] = (
         f"{TRUE_RANGE} > ts_mean({TRUE_RANGE},20) ? "

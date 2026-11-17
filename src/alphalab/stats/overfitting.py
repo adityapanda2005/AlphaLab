@@ -40,12 +40,11 @@ Bailey, D. H., Borwein, J. M., López de Prado, M., & Zhu, Q. J. (2017).
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, List, Optional, Sequence
+from typing import Dict, List, Optional
 
 import numpy as np
 import pandas as pd
 from scipy import stats as scipy_stats
-
 
 TRADING_DAYS = 252
 
@@ -309,7 +308,8 @@ def probability_of_backtest_overfitting(
         relative_rank = np.clip(relative_rank, 0.001, 0.999)
         logits.append(float(np.log(relative_rank / (1.0 - relative_rank))))
 
-    pbo = float(np.mean([1 for l in logits if l < 0]) / len(logits)) if logits else float("nan")
+    n_negative = sum(1 for val in logits if val < 0)
+    pbo = float(n_negative / len(logits)) if logits else float("nan")
     logit_mean = float(np.mean(logits)) if logits else float("nan")
 
     report = _empty_overfit_report()

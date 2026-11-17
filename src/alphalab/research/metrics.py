@@ -20,7 +20,7 @@ look-ahead, where the signal has been given information it could not have had.
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
-from typing import Dict, Iterable, List, Optional, Sequence
+from typing import Dict, List, Optional, Sequence
 
 import numpy as np
 import pandas as pd

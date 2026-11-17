@@ -34,7 +34,7 @@ two paths agree.
 from __future__ import annotations
 
 import warnings
-from typing import Callable, List, Optional, Tuple
+from typing import Callable, Optional, Tuple
 
 import numpy as np
 import pandas as pd

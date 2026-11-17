@@ -1,7 +1,5 @@
 """Shared fixtures for the test suite."""
 
-import numpy as np
-import pandas as pd
 import pytest
 
 from alphalab.data import MarketConfig, generate_market

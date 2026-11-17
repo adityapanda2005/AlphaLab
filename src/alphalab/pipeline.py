@@ -25,7 +25,6 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-import numpy as np
 import pandas as pd
 
 from .alphas import ALPHA_LIBRARY, FAMILY_OF
@@ -34,7 +33,7 @@ from .expr import Evaluator, NullCache, SubexpressionCache
 from .ml import CombinerConfig, CombinerResult, combine_signals
 from .portfolio import BacktestResult, PortfolioConfig, construct_portfolio
 from .research import ScreenConfig, evaluate_library, select_alphas
-from .stats import OverfitReport, deflated_sharpe, full_overfit_report
+from .stats import OverfitReport, full_overfit_report
 
 logger = logging.getLogger(__name__)
 
@@ -131,7 +130,7 @@ def run_pipeline(
     log(f"  cache: {evaluator.cache.stats.summary()}")
 
     # Benchmark: evaluate without cache for comparison
-    t_nc = time.perf_counter()
+    time.perf_counter()
     evaluator_nc = Evaluator(panel, NullCache())
     _, rep_nc = evaluator_nc.evaluate_many(ALPHA_LIBRARY, admission="all")
     no_cache_seconds = rep_nc.seconds
@@ -143,19 +142,19 @@ def run_pipeline(
     # Stage 3: Measure and screen
     # ------------------------------------------------------------------
     t2 = time.perf_counter()
-    log(f"\n[3/7] Measuring alpha quality...")
+    log("\n[3/7] Measuring alpha quality...")
     stats = evaluate_library(signals, panel, mask=mask, families=FAMILY_OF)
     result.alpha_stats = stats
     result.timings["measure"] = time.perf_counter() - t2
 
-    log(f"  top 5 by |IC-IR|:")
+    log("  top 5 by |IC-IR|:")
     for _, row in stats.head(5).iterrows():
         log(f"    {row['name']:30s}  IC={row['ic_mean']:+.4f}  "
             f"IR={row['ic_ir']:+.2f}  t={row['ic_t_stat']:+.1f}  "
             f"TO={row['turnover']:.2f}")
 
     t3 = time.perf_counter()
-    log(f"\n[4/7] Screening and de-duplicating...")
+    log("\n[4/7] Screening and de-duplicating...")
     screened, pruned = select_alphas(
         stats, signals, mask=mask,
         screen=config.screen,
@@ -200,7 +199,7 @@ def run_pipeline(
     # Stage 5: Backtest
     # ------------------------------------------------------------------
     t5 = time.perf_counter()
-    log(f"\n[6/7] Backtesting...")
+    log("\n[6/7] Backtesting...")
 
     for model_name, cr in result.combiner_results.items():
         bt = construct_portfolio(
@@ -219,7 +218,7 @@ def run_pipeline(
     # Stage 6: Overfitting check
     # ------------------------------------------------------------------
     t6 = time.perf_counter()
-    log(f"\n[7/7] Overfitting assessment...")
+    log("\n[7/7] Overfitting assessment...")
 
     best = result.best_model
     if best:
@@ -305,7 +304,10 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description="AlphaLab research pipeline")
-    parser.add_argument("--source", default="synthetic", choices=["synthetic", "yfinance", "csv"])
+    parser.add_argument(
+        "--source", default="synthetic",
+        choices=["synthetic", "yfinance", "csv"],
+    )
     parser.add_argument("--output", default="artifacts")
     parser.add_argument("--quiet", action="store_true")
     args = parser.parse_args()

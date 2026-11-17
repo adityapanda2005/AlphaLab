@@ -34,7 +34,10 @@ class TestPurgedWalkForward:
 
     def test_leakage_detected(self):
         """A manually broken fold should trigger the assertion."""
-        bad_fold = Fold(index=0, train_start=0, train_end=100, test_start=100, test_end=200)
+        bad_fold = Fold(
+            index=0, train_start=0, train_end=100,
+            test_start=100, test_end=200,
+        )
         with pytest.raises(AssertionError, match="label spans"):
             assert_no_leakage([bad_fold], horizon=5)
 
