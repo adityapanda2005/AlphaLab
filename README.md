@@ -193,7 +193,7 @@ The raw Sharpe of 4.15 survives the Deflated Sharpe correction (p ≈ 0, haircut
 
 ---
 
-## Technical Decisions Worth Explaining in an Interview
+## Design Decisions
 
 ### Why write a parser instead of using `eval()`?
 
@@ -213,7 +213,7 @@ Standard k-fold is invalid for time series. With a 1-day forward return as the l
 
 ### Why does the signal lose money at 10 bps cost?
 
-The dominant alpha family is 1-day reversal, which rebuilds the portfolio almost completely every day (turnover 1.0+). At 10 bps per side, that is 20 bps round-trip daily — roughly 50% annualised cost on a 100% gross book. The gross signal earns about 32% per year, so costs at this level exceed the entire gross return. This is not a failure of the model; it is the fundamental constraint of short-horizon equity strategies, and understanding it is what distinguishes a quant researcher from someone who just ran a backtest.
+The dominant alpha family is 1-day reversal, which rebuilds the portfolio almost completely every day (turnover 1.0+). At 10 bps per side, that is 20 bps round-trip daily — roughly 50% annualised cost on a 100% gross book. The gross signal earns about 32% per year, so costs at this level exceed the entire gross return. This is not a failure of the model; it is the fundamental constraint of short-horizon equity strategies.
 
 ---
 
